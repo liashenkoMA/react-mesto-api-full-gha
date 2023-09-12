@@ -1,0 +1,14 @@
+.auth__input {
+  min-width: 358px;
+  min-height: 27px;
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: rgba(204, 204, 204, 1);
+
+  background-color: #000000;
+  border: none;
+  border-bottom: 2px solid rgba(204, 204, 204, 1);
+}

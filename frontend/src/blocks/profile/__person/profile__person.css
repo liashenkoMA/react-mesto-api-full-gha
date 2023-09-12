@@ -1,0 +1,13 @@
+.profile__person {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .profile__person {
+    padding-top: 26px;
+
+    align-items: baseline;
+    justify-content: center;
+  }
+}

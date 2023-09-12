@@ -1,0 +1,6 @@
+.root {
+  height: 100vh;
+  background-color: #000;
+  overflow: auto;
+  font-family: 'Inter', Arial, sans-serif;
+}

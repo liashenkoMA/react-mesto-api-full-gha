@@ -1,0 +1,11 @@
+.auth__form-field {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+
+  min-width: 358px;
+}
+
+.auth__form-field:nth-child(even) {
+  padding-top: 30px;
+}
