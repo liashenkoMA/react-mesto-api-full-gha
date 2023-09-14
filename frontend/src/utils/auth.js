@@ -58,7 +58,7 @@ class Auth {
 }
 
 export const auth = new Auth({
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'http://api.mestomaksim.nomoredomainsicu.ru',
   headers: {
     'Accept': 'application/json',
     "Content-Type": "application/json",

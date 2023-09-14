@@ -15,7 +15,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const app = express();
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:3001',
+  origin: 'http://mestomaks.nomoredomainsicu.ru',
 }));
 const { PORT, DB_URL } = process.env;
 
