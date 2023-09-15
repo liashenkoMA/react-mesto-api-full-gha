@@ -61,8 +61,8 @@ export const auth = new Auth({
   baseUrl: 'https://api.mestomaksim.nomoredomainsicu.ru',
   headers: {
     'Accept': 'application/json',
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
     'Access-Control-Allow-Credentials': 'true',
-
+    'Allow-Control-Allow-Origin': '*'
   }
 });

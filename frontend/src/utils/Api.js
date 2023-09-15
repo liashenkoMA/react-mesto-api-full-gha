@@ -105,5 +105,6 @@ export const api = new Api({
   headers: {
     authorization: 'f1605107-de74-4364-b9cb-272c1e5a2dd9',
     'Content-Type': 'application/json',
+    'Allow-Control-Allow-Origin': '*'
   }
 });

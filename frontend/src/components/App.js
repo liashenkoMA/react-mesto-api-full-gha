@@ -34,8 +34,44 @@ function App() {
 
   const navigate = useNavigate()
 
+  const rout = {
+    main: '/',
+    login: '/sign-in',
+    register: '/sign-up',
+  }
+
+  function handleRegisterSubmit(email, password) {
+    auth.register(email, password)
+      .then(() => {
+        setRoutPopupOpen(true);
+        setRoutOn(true)
+        navigate(rout.login);
+      })
+      .catch((err) => {
+        setRoutPopupOpen(true);
+        setRoutOn(false)
+        console.log(`status: ${err.status}`, `statusText: ${err.statusText}`)
+      })
+  };
+
+  function handleLoginSubmit(email, password) {
+    auth.auth(email, password)
+      .then((data) => {
+        if (data.token) {
+          setCurrentUser(data);
+          navigate(rout.main);
+        }
+      })
+      .catch((err) => {
+        setRoutPopupOpen(true);
+        setRoutOn(false)
+        console.log(err) 
+      });
+  };
+
+  const jwt = localStorage.getItem('jwt');
+
   React.useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
 
     Promise.all([api.getUserInfo(), api.getInitialCards(), jwt && auth.tokenCheack(jwt)])
       .then(([user, cards, data]) => {
@@ -49,7 +85,7 @@ function App() {
       .catch((err) => {
         console.log(err);
       })
-  }, []);
+  }, [jwt]);
 
   function exit() {
     localStorage.clear();
@@ -142,41 +178,6 @@ function App() {
       .catch((err) => {
         console.log(err)
       })
-  };
-
-  const rout = {
-    main: '/',
-    login: '/sign-in',
-    register: '/sign-up',
-  }
-
-  function handleRegisterSubmit(email, password) {
-    auth.register(email, password)
-      .then(() => {
-        setRoutPopupOpen(true);
-        setRoutOn(true)
-        navigate(rout.login);
-      })
-      .catch((err) => {
-        setRoutPopupOpen(true);
-        setRoutOn(false)
-        console.log(`status: ${err.status}`, `statusText: ${err.statusText}`)
-      })
-  };
-
-  function handleLoginSubmit(email, password) {
-    auth.auth(email, password)
-      .then((data) => {
-        if (data.token) {
-          setCurrentUser(currentUser, currentUser.email = `${email}`);
-          navigate(rout.main);
-        }
-      })
-      .catch((err) => {
-        setRoutPopupOpen(true);
-        setRoutOn(false)
-        console.log(err) 
-      });
   };
 
   return (
