@@ -9,8 +9,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 51.250.77.241
 
-Frontend https://...
+Frontend https://mestomaks.nomoredomainsicu.ru
 
-Backend https://...
+Backend https://api.mestomaksim.nomoredomainsicu.ru
