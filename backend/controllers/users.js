@@ -8,7 +8,7 @@ const NotFoundError = require('../errors/NotFoundErr');
 const BadRequest = require('../errors/BadRequest');
 const ConflictErr = require('../errors/ConflictErr');
 
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET = 'hellow-worlds' } = process.env;
 const SALT_ROUNDS2 = 10;
 
 module.exports.getAllUsers = (req, res, next) => User.find({})

@@ -5,6 +5,7 @@ require('dotenv').config();
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { celebrate, errors, Joi } = require('celebrate');
+const rateLimit = require('express-rate-limit');
 
 const router = require('./routes');
 const { createUser, login } = require('./controllers/users');
@@ -17,14 +18,20 @@ app.use(cors({
   credentials: true,
   origin: 'https://mestomaks.nomoredomainsicu.ru',
 }));
+
 const { PORT, DB_URL } = process.env;
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many request from this IP',
+});
 
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,
 }).then(() => {
   console.log('Connected to MongoDB');
 });
-
+app.use(limiter);
 app.use(helmet());
 app.use(cookieParser());
 app.use(express.json());

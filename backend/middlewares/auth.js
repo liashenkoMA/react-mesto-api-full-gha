@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const UnauthorizedErr = require('../errors/UnauthorizedErr');
 
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET = 'hellow-worlds' } = process.env;
 
 module.exports = (req, res, next) => {
   const token = req.cookies.jwt;
