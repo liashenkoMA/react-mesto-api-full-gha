@@ -12,6 +12,7 @@ const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const processingErrors = require('./middlewares/processingErrors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const corse = require('./middlewares/cors');
 
 const app = express();
 app.use(cors({
@@ -25,22 +26,11 @@ const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   message: 'Too many request from this IP',
 });
-const allowedCors = [
-  'mestomaks.nomoredomainsicu.ru',
-];
 
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,
 }).then(() => {
   console.log('Connected to MongoDB');
-});
-app.use((req, res, next) => {
-  const { origin } = req.headers;
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-
-  next();
 });
 app.use(limiter);
 app.use(helmet());
@@ -52,13 +42,13 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
-app.post('/signin', celebrate({
+app.post('/signin', corse, celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(2),
   }).unknown(true),
 }), login);
-app.post('/signup', celebrate({
+app.post('/signup', corse, celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
@@ -67,7 +57,7 @@ app.post('/signup', celebrate({
     password: Joi.string().required().min(2),
   }).unknown(true),
 }), createUser);
-app.use(auth, router);
+app.use(corse, auth, router);
 app.use(errorLogger);
 app.use(errors());
 app.use(processingErrors);

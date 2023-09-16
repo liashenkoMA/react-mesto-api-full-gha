@@ -1,6 +1,6 @@
-// Массив доменов, с которых разрешены кросс-доменные запросы
 const allowedCors = [
   'mestomaks.nomoredomainsicu.ru',
+  'https://mestomaks.nomoredomainsicu.ru',
   'localhost:3000',
 ];
 
