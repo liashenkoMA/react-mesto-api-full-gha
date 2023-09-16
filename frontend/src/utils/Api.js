@@ -101,10 +101,11 @@ class Api {
 };
 
 export const api = new Api({
-  baseUrl: 'http://api.mestomaksim.nomoredomainsicu.ru',
+  baseUrl: 'https://api.mestomaksim.nomoredomainsicu.ru',
   headers: {
     authorization: 'f1605107-de74-4364-b9cb-272c1e5a2dd9',
     'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': 'no-cors',
     'Allow-Control-Allow-Origin': '*'
   }
 });

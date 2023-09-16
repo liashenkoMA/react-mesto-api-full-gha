@@ -14,10 +14,6 @@ const processingErrors = require('./middlewares/processingErrors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
-app.use(cors({
-  credentials: true,
-  origin: 'https://mestomaks.nomoredomainsicu.ru',
-}));
 
 const { PORT, DB_URL } = process.env;
 const limiter = rateLimit({
@@ -31,6 +27,11 @@ mongoose.connect(DB_URL, {
 }).then(() => {
   console.log('Connected to MongoDB');
 });
+app.use(cors({
+  credentials: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  origin: 'https://mestomaks.nomoredomainsicu.ru',
+}));
 app.use(limiter);
 app.use(helmet());
 app.use(cookieParser());
