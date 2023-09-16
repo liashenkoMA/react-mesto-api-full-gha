@@ -101,7 +101,7 @@ class Api {
 };
 
 export const api = new Api({
-  baseUrl: 'https://api.mestomaksim.nomoredomainsicu.ru',
+  baseUrl: 'http://api.mestomaksim.nomoredomainsicu.ru',
   headers: {
     authorization: 'f1605107-de74-4364-b9cb-272c1e5a2dd9',
     'Content-Type': 'application/json',
