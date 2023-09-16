@@ -5,14 +5,12 @@ require('dotenv').config();
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { celebrate, errors, Joi } = require('celebrate');
-const rateLimit = require('express-rate-limit');
 
 const router = require('./routes');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const processingErrors = require('./middlewares/processingErrors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const corse = require('./middlewares/cors');
 
 const app = express();
 app.use(cors({
@@ -21,18 +19,13 @@ app.use(cors({
 }));
 
 const { PORT, DB_URL } = process.env;
-const limiter = rateLimit({
-  max: 100,
-  windowMs: 60 * 60 * 1000,
-  message: 'Too many request from this IP',
-});
 
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,
 }).then(() => {
   console.log('Connected to MongoDB');
 });
-app.use(limiter);
+
 app.use(helmet());
 app.use(cookieParser());
 app.use(express.json());
@@ -42,13 +35,13 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
-app.post('/signin', corse, celebrate({
+app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(2),
   }).unknown(true),
 }), login);
-app.post('/signup', corse, celebrate({
+app.post('/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
@@ -57,7 +50,7 @@ app.post('/signup', corse, celebrate({
     password: Joi.string().required().min(2),
   }).unknown(true),
 }), createUser);
-app.use(corse, auth, router);
+app.use(auth, router);
 app.use(errorLogger);
 app.use(errors());
 app.use(processingErrors);

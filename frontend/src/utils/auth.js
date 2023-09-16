@@ -62,8 +62,6 @@ export const auth = new Auth({
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Credentials': 'true',
     'Access-Control-Allow-Origin': 'no-cors',
-    'Allow-Control-Allow-Origin': '*'
   }
 });
