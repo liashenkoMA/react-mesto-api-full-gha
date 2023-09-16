@@ -25,13 +25,23 @@ const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   message: 'Too many request from this IP',
 });
+const allowedCors = [
+  'mestomaks.nomoredomainsicu.ru',
+];
 
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,
 }).then(() => {
   console.log('Connected to MongoDB');
 });
+app.use((req, res, next) => {
+  const { origin } = req.headers;
+  if (allowedCors.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
 
+  next();
+});
 app.use(limiter);
 app.use(helmet());
 app.use(cookieParser());
